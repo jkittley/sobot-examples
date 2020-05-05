@@ -4,26 +4,51 @@
 #include <ESP8266HTTPClient.h>
 #include <WiFiClient.h>
 #include <ArduinoJson.h>
-
-ESP8266WiFiMulti WiFiMulti;
 #include <Servo.h>
 
-int PIN_D5 = 14;
-int PIN_D6 = 12;
-int PIN_D7 = 13;
-
+ESP8266WiFiMulti WiFiMulti;
 Servo servoA;
 Servo servoB;
 Servo servoC;
 
-String TOKEN = "ADD YOUR TOKEN HERE";
+// Pins to which your Servo is connected
+int PIN_D5 = 14; // ESP pin 14 = Arduino pin D5
+int PIN_D6 = 12; // ESP pin 12 = Arduino pin D6
+int PIN_D7 = 13; // ESP pin 13 = Arduino pin D7
+
+// Your Sobots token (see sobots.xyz)
+String TOKEN = "";
+
+// Your Wifi Credentials
+String WIFI_NAME = "";
+String WIFI_PASS = "";
+
 // Seconds between receive checking
 int INTERVAL = 10;
 
-// Setup the device
+//
+// Function which causes action when message received
+//
+
+void act(double x, double y, double z) {
+    Serial.println(x * 180);
+    Serial.println(y * 180);
+    Serial.println(z * 180);
+    servoA.write(x * 180);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15ms for the servo to reach the position
+    servoB.write(y * 180);              
+    delay(15);                      
+    servoC.write(z * 180);              
+    delay(15);   
+}
+
+//
+// Function called when device is powered on
+//
+
 void setup() {
+  // Setup serial port for debugging
   Serial.begin(115200);
-  // Serial.setDebugOutput(true);
   Serial.println();
   Serial.println();
   Serial.println();
@@ -41,10 +66,13 @@ void setup() {
   
   // Connect to WiFi
   WiFi.mode(WIFI_STA);
-  WiFiMulti.addAP("AIR-H2", "Virgin02380636550");
+  WiFiMulti.addAP(WIFI_NAME, WIFI_PASS);
 }
 
 
+//
+// Function to fetch new messages
+//
 
 String receive() {
   WiFiClient client;
@@ -89,11 +117,14 @@ String receive() {
   return "HELLO";
 }
 
+//
+// Function to process received messages
+//
+
 void processMessage(StaticJsonDocument<500> doc) {
     bool success = doc["success"];
     Serial.print(F("API Says it was a success? "));
     Serial.println(success);
-
     JsonObject messages_0 = doc["messages"][0];
     long messages_0_date = messages_0["date"];
     const char* messages_0_recipient = messages_0["recipient"];
@@ -107,30 +138,20 @@ void processMessage(StaticJsonDocument<500> doc) {
     act(x,y,z);
 }
 
+//
+// Function is executed in a loop i.e. once setup this function runs repeatedly
+//
 
-void act(double x, double y, double z) {
-    Serial.println(x * 180);
-    Serial.println(y * 180);
-    Serial.println(z * 180);
-    servoA.write(x * 180);              // tell servo to go to position in variable 'pos'
-    delay(15);                       // waits 15ms for the servo to reach the position
-    servoB.write(y * 180);              
-    delay(15);                      
-    servoC.write(z * 180);              
-    delay(15);   
-}
-
-
-// Main loop
 void loop() {
   
   // Make sure WiFi connected
   if ((WiFiMulti.run() == WL_CONNECTED)) {
-  // Client
+    // Look for new messages
     receive();
   } else {
+    // Report no wifi
     Serial.printf("Wifi not connect, will try again shortly\n");
   }
-  // Wait X seconds
+  // Wait X seconds before running again
   delay(INTERVAL * 1000);
 }
