@@ -15,8 +15,8 @@ This is a very basic example which will gather the most recent message and conve
 2. [Add the  CH340G drivers to your machine](https://learn.sparkfun.com/tutorials/how-to-install-ch340-drivers/all) - Software to support communication between your WeMos D1 and computer. 
 3. [Add the Wemos library to the Arduino software](https://elementztechblog.wordpress.com/2016/10/14/programming-esp8266-wemos-d1-r2-using-arduino-ide/) - A library of code to make your code simpler.
 
-## Connect up your
-Wire up your components as below
+## Connecting Up
+Wire up your components as below.
 
 ![Circuit Diagram](assets/circuit.png)
 
