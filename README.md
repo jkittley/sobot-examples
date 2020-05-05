@@ -6,7 +6,6 @@ Example code and guides for building SoBots, see [sobots.xyz](https://sobots.xyz
 ## Examples
 * [Three Servos walk into a bar](https://github.com/jkittley/sobot-examples/tree/master/arduino/three-servos)
 
-
 ## Contribute and example
 Examples are welcome, we only ask that you write good quality documentation 
 to accompany them. 
