@@ -18,7 +18,7 @@ This is a very basic example which will gather the most recent message and conve
 ## Connect up your
 Wire up your components as below
 
-![Circuit Diagram](three-servos/assets/circuit.png)
+![Circuit Diagram](assets/circuit.png)
 
 ## Upload the Code
 1. Open the Arduino Software
