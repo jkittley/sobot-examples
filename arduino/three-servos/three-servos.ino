@@ -20,8 +20,8 @@ int PIN_D7 = 13; // ESP pin 13 = Arduino pin D7
 String TOKEN = "";
 
 // Your Wifi Credentials
-String WIFI_NAME = "";
-String WIFI_PASS = "";
+char WIFI_NAME[30] = "";
+char WIFI_PASS[30] = "";
 
 // Seconds between receive checking
 int INTERVAL = 10;
