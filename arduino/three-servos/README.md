@@ -45,7 +45,7 @@ When you are up and running I suggest reading up on [Sobot Groups](https://sobot
 
 becomes:
 
-* `http://us-central1-sobots.cloudfunctions.net/list/?limit=1&groups=group:mood&token="+TOKEN`
+* `http://us-central1-sobots.cloudfunctions.net/list/?limit=1&group=group:mood&token="+TOKEN`
 
 Now your Sobot will pick up messages posted to the group and no those sent directly to you.
 
